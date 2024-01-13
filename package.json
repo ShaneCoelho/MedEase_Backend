@@ -1,0 +1,16 @@
+{
+  "name": "medease_backend",
+  "version": "1.0.0",
+  "description": "make doctor appointments online",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShaneCoelho/MedEase_Backend.git"
+  },
+  "author": "Shane Coelho",
+  "license": "ISC"
+}
