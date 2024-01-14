@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const router = express.Router();
 const Patient = mongoose.model('Patient');
+const signupSchema = require('../../validators/patient/auth-validator')
+const validate=require("../../auth-middleware/validate-middleware")
 
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', validate(signupSchema), async (req, res) => {
     const { username, email, password } = req.body;
     const Avatar = "https://firebasestorage.googleapis.com/v0/b/crewconnect-f0163.appspot.com/o/No_Profile.jpg?alt=media&token=8b69af1a-73ba-4b10-b25c-4a41137874ad&_gl=1*199to8y*_ga*MTQwODQ3ODc3Mi4xNjk3MzA4MTEw*_ga_CW55HF8NVT*MTY5NzUxNzAyOS42LjEuMTY5NzUxNzA4Ni4zLjAuMA..";
 
