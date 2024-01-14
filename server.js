@@ -5,7 +5,7 @@ const cors = require("cors");
 const path = require("path");
 require('./models/Patient');
 const helmet = require('helmet')
-// require('./models/Posts');
+require('./models/Admin');
 ConnectionDB();
 
 const app = express()
@@ -16,7 +16,8 @@ app.use(cors())
 app.use(express.json())
 
 //Available Routes
-app.use("/api/auth", require("./routes/patient/auth"))
+app.use("/api/patient/auth", require("./routes/patient/auth"))
+app.use("/api/admin/auth", require("./routes/admin/auth"))
 
 
 app.listen(port, () => {
