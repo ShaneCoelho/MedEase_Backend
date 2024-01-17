@@ -6,6 +6,7 @@ const path = require("path");
 require('./models/Patient');
 const helmet = require('helmet')
 require('./models/Admin');
+require('./models/Doctor');
 ConnectionDB();
 
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.json())
 //Available Routes
 app.use("/api/patient/auth", require("./routes/patient/auth"))
 app.use("/api/admin/auth", require("./routes/admin/auth"))
+app.use("/api/admin/docregister", require("./routes/admin/docregister"))
 
 
 app.listen(port, () => {
