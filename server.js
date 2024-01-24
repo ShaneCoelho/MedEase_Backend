@@ -19,7 +19,9 @@ app.use(express.json())
 //Available Routes
 app.use("/api/patient/auth", require("./routes/patient/auth"))
 app.use("/api/admin/auth", require("./routes/admin/auth"))
+app.use("/api/doctor/auth", require("./routes/doctor/auth"))
 app.use("/api/admin/docregister", require("./routes/admin/docregister"))
+app.use("/api/patient/details", require("./routes/patient/details"))
 
 
 app.listen(port, () => {

@@ -69,7 +69,7 @@ const doctorSchema = new mongoose.Schema({
 
     med_license: {
         type: String,
-        required: true
+        default: ""
     },
 
     username: {
