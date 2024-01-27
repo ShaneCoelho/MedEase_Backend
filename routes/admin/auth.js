@@ -26,7 +26,7 @@ router.post('/signin', async (req, res) => {
     }
 
     try {
-        const user = await Admin.findOne({ _id: '65a396f26cc14061e25688d4' });
+        const user = await Admin.findOne({ username });
         if (!user) {
             return res.status(401).send({ error: "Invalid credentials" });
         }
