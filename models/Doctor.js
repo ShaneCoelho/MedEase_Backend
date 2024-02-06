@@ -12,7 +12,7 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
 
-    dob: {
+    birthdate: {
         type: String,
         required: true
     },

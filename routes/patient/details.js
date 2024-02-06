@@ -31,6 +31,7 @@ router.post('/adddetails', fetchpatient, uploads.single('profile'), async (req, 
 
         const jsonData = JSON.parse(req.body.data);
         const { name, gender, birthdate, bloodgroup, weight, mobno} = jsonData;
+        console.log(name)
 
         const result = await cloudinary.uploader.upload(req.file.path, {
             public_id: `${req.user._id}_profile`,

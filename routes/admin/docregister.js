@@ -31,7 +31,7 @@ router.post('/adddoctor', fetchadmin, uploads.single('profile'), async (req, res
     try {
 
         const jsonData = JSON.parse(req.body.data);
-        const { name, gender, dob, email, phone, address, licene_number, specialization, experience, qualification, med_school, graduation_year, gov_id, med_license, username, password} = jsonData;
+        const { name, gender, birthdate, email, phone, address, licene_number, specialization, experience, qualification, med_school, graduation_year, gov_id, med_license, username, password} = jsonData;
 
         const existingUser = await Doctor.findOne({ username });
         if (existingUser) {
@@ -47,7 +47,7 @@ router.post('/adddoctor', fetchadmin, uploads.single('profile'), async (req, res
 
         const Avatar=result.url;
 
-        const newDoctor = new Doctor({ name, gender, dob, email, phone, address, licene_number, specialization, experience, qualification, med_school, graduation_year, gov_id, med_license, username, password, Avatar });
+        const newDoctor = new Doctor({ name, gender, birthdate, email, phone, address, licene_number, specialization, experience, qualification, med_school, graduation_year, gov_id, med_license, username, password, Avatar });
         await newDoctor.save();
 
         res.status(201).json({ message: 'Doctor registered successfully' });
