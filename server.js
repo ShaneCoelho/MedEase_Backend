@@ -22,6 +22,9 @@ app.use("/api/admin/auth", require("./routes/admin/auth"))
 app.use("/api/doctor/auth", require("./routes/doctor/auth"))
 app.use("/api/admin/docregister", require("./routes/admin/docregister"))
 app.use("/api/patient/details", require("./routes/patient/details"))
+app.use("/api/patient/details", require("./routes/patient/details"))
+app.use("/api/patient/appointment", require("./routes/patient/make_appointment"))
+app.use("/api/patient/review", require("./routes/patient/reviews"))
 
 
 app.listen(port, () => {

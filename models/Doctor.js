@@ -72,6 +72,11 @@ const doctorSchema = new mongoose.Schema({
         default: ""
     },
 
+    reviews: {
+        type: Array,
+        default: []
+    },
+
     username: {
         type: String,
         required: true
@@ -124,5 +129,14 @@ doctorSchema.methods.comparePassword = function (candidatePassword) {
         })
     })
 }
+
+doctorSchema.pre('save', function(next) {
+    if (this.reviews && this.reviews.length > 0) {
+      // Move the last element to the 0th position
+      const lastReview = this.reviews.pop();
+      this.reviews.unshift(lastReview);
+    }
+    next();
+  });
 
 mongoose.model('Doctor', doctorSchema)
