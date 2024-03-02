@@ -32,7 +32,7 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
 
-    licene_number: {
+    city: {
         type: String,
         required: true
     },
@@ -62,7 +62,7 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
 
-    gov_id: {
+    practicing_at: {
         type: String,
         required: true
     },
