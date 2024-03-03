@@ -77,6 +77,16 @@ const doctorSchema = new mongoose.Schema({
         default: []
     },
 
+    pending: {
+        type: Array,
+        default: []
+    },
+
+    approved: {
+        type: Array,
+        default: []
+    },
+
     username: {
         type: String,
         required: true

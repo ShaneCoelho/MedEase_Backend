@@ -46,6 +46,16 @@ const patientSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    
+    pending: {
+        type: Array,
+        default: []
+    },
+
+    past_status: {
+        type: Array,
+        default: []
+    },
 
     Avatar: {
         type: String,
@@ -89,5 +99,14 @@ patientSchema.methods.comparePassword = function (candidatePassword) {
         })
     })
 }
+
+patientSchema.pre('save', function(next) {
+    if (this.pending && this.pending.length > 0) {
+      // Move the last element to the 0th position
+      const lastAppointment = this.pending.pop();
+      this.pending.unshift(lastAppointment);
+    }
+    next();
+  });
 
 mongoose.model('Patient', patientSchema)
