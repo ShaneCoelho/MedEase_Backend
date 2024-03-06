@@ -106,6 +106,11 @@ patientSchema.pre('save', function(next) {
       const lastAppointment = this.pending.pop();
       this.pending.unshift(lastAppointment);
     }
+    if (this.past_status && this.past_status.length > 0) {
+        // Move the last element to the 0th position
+        const lastPastStatus = this.past_status.pop();
+        this.past_status.unshift(lastPastStatus);
+      }
     next();
   });
 

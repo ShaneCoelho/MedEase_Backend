@@ -96,6 +96,7 @@ admin.initializeApp({
     const Doc_Avatar = jsonData.Avatar;
 
     //Accessing using token
+    const patient_id = req.user._id;
     const patient_name = req.user.name;
     const mobno = req.user.mobno;
     const Patient_Avatar = req.user.Avatar;
@@ -137,6 +138,7 @@ admin.initializeApp({
   
           const newFile = {
             appoint_id: appoint_id,
+            patient_id: patient_id,
             patient_name: patient_name,
             date: date,
             preferred_time: preferred_time,

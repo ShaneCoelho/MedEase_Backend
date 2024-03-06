@@ -146,6 +146,11 @@ doctorSchema.pre('save', function(next) {
       const lastReview = this.reviews.pop();
       this.reviews.unshift(lastReview);
     }
+    if (this.approved && this.approved.length > 0) {
+        // Move the last element to the 0th position
+        const lastApproved = this.approved.pop();
+        this.approved.unshift(lastApproved);
+      }
     next();
   });
 
