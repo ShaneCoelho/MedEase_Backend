@@ -26,6 +26,7 @@ app.use("/api/patient/details", require("./routes/patient/details"))
 app.use("/api/patient/details", require("./routes/patient/details"))
 app.use("/api/patient/appointment", require("./routes/patient/make_appointment"))
 app.use("/api/patient/review", require("./routes/patient/reviews"))
+app.use("/api/patient/track", require("./routes/patient/track_appointment"))
 
 
 app.listen(port, () => {

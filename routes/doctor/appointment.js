@@ -73,7 +73,7 @@ router.post('/approveappointment', fetchdoctor, async (req, res) => {
             Patient_Avatar: Patient_Avatar
         };
 
-        const newPastStatus = {
+        const newApproved = {
           appoint_id: appoint_id,
           doc_name: doc_name,
           date: date,
@@ -94,7 +94,7 @@ router.post('/approveappointment', fetchdoctor, async (req, res) => {
         // Remove the appointment from the pending array
         doctor.pending.splice(appointIndex, 1);
 
-        patient.past_status.push(newPastStatus);
+        patient.approved.push(newApproved);
 
         //Searching the appointment with appointment id
         const appointPatientIndex = patient.pending.findIndex(appointment => appointment.appoint_id === appointIdToDelete);
@@ -151,7 +151,7 @@ router.post('/rejectappointment', fetchdoctor, async (req, res) => {
         }
 
 
-        const newPastStatus = {
+        const newRejected = {
           appoint_id: appoint_id,
           doc_name: doc_name,
           date: date,
@@ -170,7 +170,7 @@ router.post('/rejectappointment', fetchdoctor, async (req, res) => {
         // Remove the appointment from the pending array
         doctor.pending.splice(appointIndex, 1);
 
-        patient.past_status.push(newPastStatus);
+        patient.rejected.push(newRejected);
 
         //Searching the appointment with appointment id
         const appointPatientIndex = patient.pending.findIndex(appointment => appointment.appoint_id === appointIdToDelete);
