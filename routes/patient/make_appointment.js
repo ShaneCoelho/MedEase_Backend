@@ -92,7 +92,7 @@ router.post("/makeappointment", fetchpatient, upload.single("file"), async (req,
   const doc_name = jsonData.name;
   const preferred_time = jsonData.preferred_time;
   const description = jsonData.description;
-  const date = jsonData.date;
+  const date = new Date(jsonData.date).toLocaleDateString('en-GB');
   const Doc_Avatar = jsonData.Avatar;
 
   //Accessing using token

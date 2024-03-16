@@ -100,7 +100,12 @@ const doctorSchema = new mongoose.Schema({
     Avatar: {
         type: String,
         default: ""
-    }
+    },
+
+    location: {
+        type: { type: String, default: "Point" },
+        coordinates: { type: [Number], required: true, index: '2dsphere' }, // Create a 2dsphere index for geospatial queries
+    },
 
 })
 
