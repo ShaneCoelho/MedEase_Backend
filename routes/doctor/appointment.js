@@ -74,12 +74,12 @@ router.post('/approveappointment', fetchdoctor, async (req, res) => {
         };
 
         const newApproved = {
-          appoint_id: appoint_id,
-          doc_name: doc_name,
-          date: date,
-          time_slot: time_slot,
-          status: status,
-          Doc_Avatar: Doc_Avatar
+            appoint_id: appoint_id,
+            doc_name: doc_name,
+            date: date,
+            time_slot: time_slot,
+            status: status,
+            Doc_Avatar: Doc_Avatar
         };
 
         doctor.approved.push(newFile);
@@ -152,11 +152,11 @@ router.post('/rejectappointment', fetchdoctor, async (req, res) => {
 
 
         const newRejected = {
-          appoint_id: appoint_id,
-          doc_name: doc_name,
-          date: date,
-          status: status,
-          Doc_Avatar: Doc_Avatar
+            appoint_id: appoint_id,
+            doc_name: doc_name,
+            date: date,
+            status: status,
+            Doc_Avatar: Doc_Avatar
         };
 
 
@@ -190,6 +190,44 @@ router.post('/rejectappointment', fetchdoctor, async (req, res) => {
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
+    }
+});
+
+
+router.post('/viewapprovedappointments', fetchdoctor, async (req, res) => {
+
+    const doctorId = req.user._id;
+
+    try {
+        const doctor = await Doctor.findById(doctorId);
+
+        if (!doctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+
+        // Filter appointments for today or later
+        const today = new Date();
+        const filteredAppointments = doctor.approved.filter(appointment => {
+            const [day, month, year] = appointment.date.split('/'); 
+            const appointmentDate = new Date(`${year}-${month}-${day}`); // Reformatting the date string to YYYY-MM-DD
+            // Set hours, minutes, seconds, and milliseconds of today's date to 0 for accurate comparison
+            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            return appointmentDate >= todayStart;
+        });
+
+        const approvedAppointments = filteredAppointments.map(appointment => {
+            return {
+                patient_name: appointment.patient_name,
+                date: appointment.date,
+                time_slot: appointment.time_slot,
+                appoint_id: appointment.appoint_id
+            };
+        });
+
+        res.json(approvedAppointments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
