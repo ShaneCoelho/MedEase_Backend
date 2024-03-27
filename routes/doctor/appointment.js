@@ -208,7 +208,7 @@ router.post('/viewapprovedappointments', fetchdoctor, async (req, res) => {
         // Filter appointments for today or later
         const today = new Date();
         const filteredAppointments = doctor.approved.filter(appointment => {
-            const [day, month, year] = appointment.date.split('/'); 
+            const [day, month, year] = appointment.date.split('/');
             const appointmentDate = new Date(`${year}-${month}-${day}`); // Reformatting the date string to YYYY-MM-DD
             // Set hours, minutes, seconds, and milliseconds of today's date to 0 for accurate comparison
             const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -230,6 +230,113 @@ router.post('/viewapprovedappointments', fetchdoctor, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+router.post('/viewtodaysappointments', fetchdoctor, async (req, res) => {
+
+    const doctorId = req.user._id;
+
+    try {
+        const doctor = await Doctor.findById(doctorId);
+
+        if (!doctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+
+        // Filter appointments for today
+        const today = new Date();
+        const filteredAppointments = doctor.approved.filter(appointment => {
+            const [day, month, year] = appointment.date.split('/'); // Splitting the date string
+            const appointmentDate = new Date(`${year}-${month}-${day}`); // Reformatting the date string to YYYY-MM-DD
+            return appointmentDate.toDateString() === today.toDateString();
+        });
+
+        const approvedAppointments = filteredAppointments.map(appointment => {
+            return {
+                patient_name: appointment.patient_name,
+                date: appointment.date,
+                time_slot: appointment.time_slot,
+                appoint_id: appointment.appoint_id,
+                description: appointment.description,
+                document: appointment.document,
+                Patient_Avatar: appointment.Patient_Avatar
+            };
+        });
+
+        res.json(approvedAppointments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.post('/viewpastappointments', fetchdoctor, async (req, res) => {
+
+    const doctorId = req.user._id;
+
+    try {
+        const doctor = await Doctor.findById(doctorId);
+
+        if (!doctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+
+        // Filter appointments for today or later
+        const today = new Date();
+        const filteredAppointments = doctor.approved.filter(appointment => {
+            const [day, month, year] = appointment.date.split('/');
+            const appointmentDate = new Date(`${year}-${month}-${day}`); // Reformatting the date string to YYYY-MM-DD
+            // Set hours, minutes, seconds, and milliseconds of today's date to 0 for accurate comparison
+            const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            return appointmentDate <= todayStart;
+        });
+
+        const approvedAppointments = filteredAppointments.map(appointment => {
+            return {
+                patient_name: appointment.patient_name,
+                date: appointment.date,
+                time_slot: appointment.time_slot,
+                appoint_id: appointment.appoint_id
+            };
+        });
+
+        res.json(approvedAppointments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.post('/cancelappointment', fetchdoctor, async (req, res) => {
+
+    const doctorId = req.user._id;
+    const appointId = req.body.appoint_id;
+
+    try {
+        // Find the doctor by id
+        const doctor = await Doctor.findById(doctorId);
+
+        if (!doctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+
+        const appointIndex = doctor.approved.findIndex(appointment => appointment.appoint_id === appointId);
+
+        if (appointIndex === -1) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        doctor.approved.splice(appointIndex, 1);
+
+        await doctor.save();
+
+        res.json({ message: 'Appointment deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 module.exports = router
