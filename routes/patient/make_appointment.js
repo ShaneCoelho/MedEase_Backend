@@ -80,7 +80,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post("/makeappointment", fetchpatient, upload.single("file"), async (req, res) => {
-  
+
   console.log("reached");
 
   const jsonData = JSON.parse(req.body.data);
@@ -100,6 +100,10 @@ router.post("/makeappointment", fetchpatient, upload.single("file"), async (req,
   const patient_name = req.user.name;
   const mobno = req.user.mobno;
   const Patient_Avatar = req.user.Avatar;
+  const gender = req.user.gender;
+  const birthdate = req.user.birthdate;
+  const bloodgroup = req.user.bloodgroup;
+  const weight = req.user.weight;
 
   // Appointment Id
   const appoint_id = generateRandomNumber();
@@ -143,6 +147,10 @@ router.post("/makeappointment", fetchpatient, upload.single("file"), async (req,
             description: description,
             document: document,
             mobno: mobno,
+            gender: gender,
+            birthdate: birthdate,
+            bloodgroup: bloodgroup,
+            weight: weight,
             Patient_Avatar: Patient_Avatar
           };
 
@@ -189,6 +197,10 @@ router.post("/makeappointment", fetchpatient, upload.single("file"), async (req,
         description: description,
         document: document,
         mobno: mobno,
+        gender: gender,
+        birthdate: birthdate,
+        bloodgroup: bloodgroup,
+        weight: weight,
         Patient_Avatar: Patient_Avatar
       };
 
