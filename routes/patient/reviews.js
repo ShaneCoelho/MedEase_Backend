@@ -27,14 +27,14 @@ router.post('/makereview', fetchpatient, async (req, res) => {
 
     const review_id = generateRandomNumber();
 
-    const { id, rating, review } = req.body;
+    const { doc_id, rating, review } = req.body;
 
     const patient_name= req.user.name;
     const patient_Avatar= req.user.Avatar;
 
     try {
         // Find the doctor by ID
-        const doctor = await Doctor.findById(id);
+        const doctor = await Doctor.findById(doc_id);
 
         if (!doctor) {
             return res.status(404).json({ error: 'Doctor not found' });
@@ -51,6 +51,17 @@ router.post('/makereview', fetchpatient, async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+router.post('/viewdoctors', async (req, res) => {
+  try {
+    const doctors = await Doctor.find({}, 'id name practicing_at specialization city Avatar');
+
+    res.json(doctors);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 
