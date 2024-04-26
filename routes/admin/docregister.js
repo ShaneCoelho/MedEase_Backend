@@ -31,7 +31,7 @@ router.post('/adddoctor', fetchadmin, uploads.single('profile'), async (req, res
     try {
 
         const jsonData = JSON.parse(req.body.data);
-        const { name, gender, birthdate, email, phone, address, city, specialization, experience, qualification, med_school, graduation_year, practicing_at, med_license, username, password} = jsonData;
+        const { name, gender, birthdate, email, phone, address, city, specialization, experience, qualification, med_school, graduation_year, practicing_at, med_license, username, password, google_location, location: { latitude, longitude }} = jsonData;
 
         const existingUser = await Doctor.findOne({ username });
         if (existingUser) {
@@ -63,8 +63,13 @@ router.post('/adddoctor', fetchadmin, uploads.single('profile'), async (req, res
           practicing_at, 
           med_license, 
           username, 
-          password, 
-          Avatar 
+          password,
+          google_location,
+          Avatar,
+          location: {
+            type: "Point",
+            coordinates: [longitude, latitude], // Reverse order for MongoDB
+          },  
         });
         await newDoctor.save();
 
