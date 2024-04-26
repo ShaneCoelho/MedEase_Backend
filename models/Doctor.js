@@ -97,6 +97,11 @@ const doctorSchema = new mongoose.Schema({
         required: true
     },
 
+    google_location: {
+        type: String,
+        default: ""
+    },
+
     Avatar: {
         type: String,
         default: ""

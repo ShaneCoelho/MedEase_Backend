@@ -47,7 +47,25 @@ router.post('/adddoctor', fetchadmin, uploads.single('profile'), async (req, res
 
         const Avatar=result.url;
 
-        const newDoctor = new Doctor({ name, gender, birthdate, email, phone, address, city, specialization, experience, qualification, med_school, graduation_year, practicing_at, med_license, username, password, Avatar });
+        const newDoctor = new Doctor({ 
+          name, 
+          gender, 
+          birthdate, 
+          email, 
+          phone, 
+          address, 
+          city, 
+          specialization, 
+          experience, 
+          qualification, 
+          med_school, 
+          graduation_year, 
+          practicing_at, 
+          med_license, 
+          username, 
+          password, 
+          Avatar 
+        });
         await newDoctor.save();
 
         res.status(201).json({ message: 'Doctor registered successfully' });

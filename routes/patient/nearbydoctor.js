@@ -24,7 +24,7 @@ router.post('/findnearestdoctor', async (req, res) => {
         const doctors = await Doctor.find({
             location: {
                 $geoWithin: {
-                    $centerSphere: [location.coordinates, 0.01], // Search radius in radians (adjust for kilometers)
+                    $centerSphere: [location.coordinates, 0.001], // Search radius in radians (adjust for kilometers)
                 },
             },
             ...query, // Include specialization filter

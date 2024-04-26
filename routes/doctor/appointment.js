@@ -311,6 +311,7 @@ router.post('/cancelappointment', fetchdoctor, async (req, res) => {
 
     const doctorId = req.user._id;
     const appointId = req.body.appoint_id;
+    console.log(appointId)
 
     try {
         // Find the doctor by id
