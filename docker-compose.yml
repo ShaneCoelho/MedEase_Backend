@@ -3,4 +3,4 @@ services :
   web : 
     image : shanecoelho/medease-backend:latest
     ports : 
-      - "5000:5000"
+      - "4000:4000"
