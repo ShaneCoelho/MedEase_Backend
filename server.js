@@ -31,7 +31,7 @@ app.use("/api/patient/review", require("./routes/patient/reviews"))
 app.use("/api/patient/track", require("./routes/patient/track_appointment"))
 app.use("/api/patient/nearbydoctor", require("./routes/patient/nearbydoctor"))
 
-
+//Connecting to backend
 app.listen(port, () => {
   console.log(` backend listening at http://localhost:${port}`)
 })
